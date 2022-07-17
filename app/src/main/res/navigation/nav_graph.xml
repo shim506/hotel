@@ -7,12 +7,12 @@
 
     <fragment
         android:id="@+id/allFragment"
-        android:name="com.example.hotel.AllFragment"
+        android:name="com.example.hotel.ui.AllFragment"
         android:label="fragment_all"
         tools:layout="@layout/fragment_all" />
     <fragment
         android:id="@+id/favoriteFragment"
-        android:name="com.example.hotel.FavoriteFragment"
+        android:name="com.example.hotel.ui.FavoriteFragment"
         android:label="fragment_favorite"
         tools:layout="@layout/fragment_favorite" />
 </navigation>
