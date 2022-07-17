@@ -31,7 +31,6 @@ class MainActivity : AppCompatActivity() {
 
         binding.bottomNavigation.setupWithNavController(findNavController(R.id.nav_host))
 
-        viewModel.loadLodgingData()
     }
 
 }

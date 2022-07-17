@@ -14,6 +14,9 @@ interface ProductDao {
     @Delete
     fun delete(product: ProductItem.Product)
 
-    @Query("SELECT * FROM Product") // 테이블의 모든 값을 가져와라
+    @Query("SELECT * FROM Product")
     fun getAll(): List<ProductItem.Product>
+
+    @Query("SELECT id FROM Product")
+    fun getAllIds(): List<Int>
 }

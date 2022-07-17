@@ -15,8 +15,7 @@ sealed class ProductItem() {
         val id: Int,
         val name: String,
         val rate: Double,
-        val thumbnail: String,
-        val favorite: Boolean = false
+        val thumbnail: String
     ) : ProductItem()
 
     class LoadingBar() : ProductItem()

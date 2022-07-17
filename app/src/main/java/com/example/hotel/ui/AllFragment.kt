@@ -18,6 +18,7 @@ import com.example.hotel.R
 import com.example.hotel.data.ProductItem
 import com.example.hotel.databinding.FragmentAllBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -81,13 +82,16 @@ class AllFragment : Fragment() {
     private fun setRecyclerview() {
         val listener = object : AdapterItemTouchListener {
             override fun checkFavorite(product: ProductItem.Product) {
-                activityViewModel.addFavorite(product)
+                lifecycleScope.launch(Dispatchers.IO) {
+                    activityViewModel.addFavorite(product)
+                }
             }
+
             override fun cancelFavorite(product: ProductItem.Product) {
-                activityViewModel.cancelFavorite(product)
+                lifecycleScope.launch(Dispatchers.IO) { activityViewModel.cancelFavorite(product) }
             }
         }
-        adapter = LodgingListAdapter(listener)
+        adapter = LodgingListAdapter(listener, activityViewModel.favoriteIdSet)
         binding.rvAllLodging.adapter = adapter
         binding.rvAllLodging.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)

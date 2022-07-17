@@ -4,6 +4,7 @@ package com.example.hotel.ui
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.CheckBox
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -13,16 +14,19 @@ import com.example.hotel.data.ProductItem
 import com.example.hotel.databinding.ItemLoadingBinding
 import com.example.hotel.databinding.LodgingListItemBinding
 
-class LodgingListAdapter(val listener: AdapterItemTouchListener) :
+class LodgingListAdapter(
+    val listener: AdapterItemTouchListener,
+    val initialFavoriteIdSet: Set<Int>
+) :
     ListAdapter<ProductItem, RecyclerView.ViewHolder>(diffUtil) {
 
     inner class LodgingListItemViewHolder(private val binding: LodgingListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: ProductItem.Product) {
             binding.item = item
-
-            binding.cbFavorite.setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked) listener.checkFavorite(item)
+            binding.cbFavorite.isChecked = initialFavoriteIdSet.contains(item.id)
+            binding.cbFavorite.setOnClickListener {
+                if (binding.cbFavorite.isChecked) listener.checkFavorite(item)
                 else listener.cancelFavorite(item)
             }
         }

@@ -1,5 +1,6 @@
 package com.example.hotel.data.repository.local
 
+import androidx.room.Query
 import com.example.hotel.data.Dto
 import com.example.hotel.data.ProductItem
 import com.example.hotel.data.repository.MainDataSource
@@ -21,5 +22,9 @@ class FavoriteDataSource @Inject constructor(
 
     fun insertProduct(product: ProductItem.Product) {
         return dao.insert(product)
+    }
+
+    suspend fun getProductIds(): List<Int> {
+        return dao.getAllIds()
     }
 }

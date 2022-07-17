@@ -10,6 +10,7 @@ import com.example.hotel.network.onError
 import com.example.hotel.network.onException
 import com.example.hotel.network.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -30,6 +31,19 @@ class MainViewModel @Inject constructor(
 
     private val _exceptionMessage = MutableSharedFlow<String>()
     val exceptionMessage: SharedFlow<String> = _exceptionMessage
+
+    val favoriteIdSet = mutableSetOf<Int>()
+
+    init {
+        loadLodgingData()
+        setFavoriteIdSet()
+    }
+
+    private fun setFavoriteIdSet() {
+        viewModelScope.launch(Dispatchers.IO) {
+            favoriteIdSet.addAll(favoriteDataSource.getProductIds())
+        }
+    }
 
     fun loadLodgingData() {
         viewModelScope.launch {
@@ -70,11 +84,13 @@ class MainViewModel @Inject constructor(
         pagingCount++
     }
 
-    fun addFavorite(product: ProductItem.Product) {
+    suspend fun addFavorite(product: ProductItem.Product) {
         favoriteDataSource.insertProduct(product)
+        favoriteIdSet.add(product.id)
     }
 
-    fun cancelFavorite(product: ProductItem.Product) {
-        favoriteDataSource.insertProduct(product)
+    suspend fun cancelFavorite(product: ProductItem.Product) {
+        favoriteDataSource.deleteProduct(product)
+        favoriteIdSet.remove(product.id)
     }
 }
