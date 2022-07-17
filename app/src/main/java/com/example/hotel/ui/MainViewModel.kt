@@ -1,10 +1,10 @@
 package com.example.hotel.ui
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.hotel.data.ProductItem
 import com.example.hotel.data.repository.MainRepository
+import com.example.hotel.data.repository.local.FavoriteDataSource
 import com.example.hotel.network.NetworkResult.Companion.LAST_PAGE
 import com.example.hotel.network.onError
 import com.example.hotel.network.onException
@@ -16,7 +16,10 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class MainViewModel @Inject constructor(private val mainRepository: MainRepository) : ViewModel() {
+class MainViewModel @Inject constructor(
+    private val mainRepository: MainRepository,
+    private val favoriteDataSource: FavoriteDataSource
+) : ViewModel() {
     private var pagingCount = 1
 
     private val _accumulateProductList = MutableStateFlow<List<ProductItem>>(listOf())
@@ -65,5 +68,13 @@ class MainViewModel @Inject constructor(private val mainRepository: MainReposito
 
     fun addPageCount() {
         pagingCount++
+    }
+
+    fun addFavorite(product: ProductItem.Product) {
+        favoriteDataSource.insertProduct(product)
+    }
+
+    fun cancelFavorite(product: ProductItem.Product) {
+        favoriteDataSource.insertProduct(product)
     }
 }

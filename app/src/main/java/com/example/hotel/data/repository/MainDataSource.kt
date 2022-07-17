@@ -1,6 +1,5 @@
 package com.example.hotel.data.repository
 
-import com.example.hotel.data.Data
 import com.example.hotel.data.Dto
 import com.example.hotel.network.NetworkResult
 

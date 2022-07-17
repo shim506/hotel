@@ -32,7 +32,12 @@ class NetworkResultCall<T : Any>(
                 } else {
                     callback.onResponse(
                         this@NetworkResultCall,
-                        Response.success(NetworkResult.Error(response.code(), response.errorBody().toString()))
+                        Response.success(
+                            NetworkResult.Error(
+                                response.code(),
+                                response.errorBody().toString()
+                            )
+                        )
                     )
                 }
             }

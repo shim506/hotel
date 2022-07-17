@@ -1,7 +1,5 @@
 package com.example.hotel.network
 
-import com.example.hotel.network.NetworkResult
-import com.example.hotel.network.NetworkResultCall
 import retrofit2.Call
 import retrofit2.CallAdapter
 import java.lang.reflect.Type

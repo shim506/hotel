@@ -2,7 +2,8 @@ package com.example.hotel.data.repository
 
 import android.util.Log
 import com.example.hotel.data.Dto
-import com.example.hotel.network.*
+import com.example.hotel.network.ApiService
+import com.example.hotel.network.NetworkResult
 import com.example.hotel.network.NetworkResult.Companion.LAST_PAGE
 import com.example.hotel.network.NetworkResult.Companion.LAST_PAGE_MESSAGE
 import javax.inject.Inject
