@@ -1,5 +1,6 @@
 package com.example.hotel.network
 
+import android.util.Log
 import com.example.hotel.network.NetworkResult.Companion.NULL_BODY_ERROR
 import okhttp3.Request
 import okio.Timeout
@@ -38,6 +39,7 @@ class NetworkResultCall<T : Any>(
 
             override fun onFailure(call: Call<T>, t: Throwable) {
                 val networkResult: NetworkResult<T> = NetworkResult.Exception(t)
+                Log.d("lastIndex", t.toString())
                 callback.onResponse(this@NetworkResultCall, Response.success(networkResult))
             }
         })

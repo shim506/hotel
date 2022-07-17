@@ -2,12 +2,12 @@ package com.example.hotel.network
 
 sealed class NetworkResult<T : Any> {
     class Success<T : Any>(val resultData: T) : NetworkResult<T>()
-    class Loading<T : Any> : NetworkResult<T>()
     class Error<T : Any>(val code: Int, val message: String) : NetworkResult<T>()
     class Exception<T : Any>(val e: Throwable) : NetworkResult<T>()
     companion object {
         const val NULL_BODY_ERROR = 0
-        const val ILLEGAL_CONTENT_TYPE = 1
+        const val LAST_PAGE = 400
+        const val LAST_PAGE_MESSAGE = "마지막페이지 입니다."
     }
 }
 

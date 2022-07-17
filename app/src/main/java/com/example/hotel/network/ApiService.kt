@@ -1,10 +1,11 @@
 package com.example.hotel.network
 
-import com.example.hotel.data.Data
+import com.example.hotel.data.Dto
 import retrofit2.http.GET
+import retrofit2.http.Path
 
 
 interface ApiService {
-    @GET("1.json")
-    suspend fun getList(): NetworkResult<Data>
+    @GET("{pageNumber}.json")
+    suspend fun getList(@Path("pageNumber") pageNumber: Int = 1): NetworkResult<Dto>
 }
