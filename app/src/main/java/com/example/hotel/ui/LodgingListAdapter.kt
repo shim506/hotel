@@ -13,14 +13,18 @@ import com.example.hotel.data.ProductItem
 import com.example.hotel.databinding.ItemLoadingBinding
 import com.example.hotel.databinding.LodgingListItemBinding
 
-class LodgingListAdapter() :
+class LodgingListAdapter(val listener: AdapterItemTouchListener) :
     ListAdapter<ProductItem, RecyclerView.ViewHolder>(diffUtil) {
 
     inner class LodgingListItemViewHolder(private val binding: LodgingListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: ProductItem.Product) {
             binding.item = item
-            Log.d("test11", "11")
+
+            binding.cbFavorite.setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) listener.checkFavorite(item)
+                else listener.cancelFavorite(item)
+            }
         }
     }
 

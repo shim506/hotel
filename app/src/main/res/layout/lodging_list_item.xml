@@ -32,14 +32,17 @@
                 tools:layout_editor_absoluteX="96dp"
                 tools:src="@drawable/ic_launcher_background" />
 
-            <androidx.appcompat.widget.AppCompatButton
+            <CheckBox
+                android:id="@+id/cb_favorite"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:background="@drawable/ic_baseline_favorite_border_24"
-                android:backgroundTint="@color/white"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:background="@drawable/favorite_checkbox_background"
+                android:backgroundTint="@color/hotel_red_1"
+                android:button="@null"
+                app:layout_constraintBottom_toBottomOf="@id/iv_list_thumbnail"
+                app:layout_constraintEnd_toEndOf="@id/iv_list_thumbnail"
+                app:layout_constraintStart_toStartOf="@id/iv_list_thumbnail"
+                app:layout_constraintTop_toTopOf="@id/iv_list_thumbnail" />
 
             <TextView
                 android:id="@+id/tv_list_title"
