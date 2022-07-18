@@ -85,7 +85,7 @@ class LodgingListAdapter(
         val diffUtil = object : DiffUtil.ItemCallback<ProductItem>() {
             override fun areItemsTheSame(oldItem: ProductItem, newItem: ProductItem): Boolean {
                 return when (oldItem) {
-                    is ProductItem.Product -> oldItem.id == (newItem as? ProductItem.Product)?.id ?: false
+                    is ProductItem.Product -> oldItem == (newItem as? ProductItem.Product) ?: false
                     is ProductItem.LoadingBar -> oldItem == (newItem as? ProductItem.LoadingBar) ?: false
                 }
             }

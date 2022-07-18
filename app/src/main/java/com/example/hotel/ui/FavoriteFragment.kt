@@ -1,10 +1,12 @@
 package com.example.hotel.ui
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RadioButton
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -14,6 +16,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.hotel.R
 import com.example.hotel.data.ProductItem
+import com.example.hotel.data.SortType
 import com.example.hotel.databinding.FragmentFavoriteBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -35,10 +38,34 @@ class FavoriteFragment : Fragment() {
 
         setRecyclerview()
 
-        activityViewModel.loadFavoriteData()
+
         listenFavoriteDataChange()
+        listenSortTypeButtonClicked()
 
         return binding.root
+    }
+
+    private fun listenSortTypeButtonClicked() {
+        binding.rbRecentSort.setOnClickListener {
+            if (binding.rbRecentSort.isChecked) {
+                activityViewModel.changeSortType(SortType.RECENT)
+            }
+        }
+        binding.rbOldSort.setOnClickListener {
+            if (binding.rbOldSort.isChecked) {
+                activityViewModel.changeSortType(SortType.OLD)
+            }
+        }
+        binding.rbGoodRateSort.setOnClickListener {
+            if (binding.rbGoodRateSort.isChecked) {
+                activityViewModel.changeSortType(SortType.GOOD_RATE)
+            }
+        }
+        binding.rbBadRateSort.setOnClickListener {
+            if (binding.rbBadRateSort.isChecked) {
+                activityViewModel.changeSortType(SortType.BAD_RATE)
+            }
+        }
     }
 
     private fun listenFavoriteDataChange() {
@@ -46,6 +73,7 @@ class FavoriteFragment : Fragment() {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 activityViewModel.favoriteList.collect {
                     adapter.submitList(it)
+                    binding.rvFavoriteLodging.smoothScrollToPosition(0)
                 }
             }
         }
@@ -54,14 +82,12 @@ class FavoriteFragment : Fragment() {
     private fun setRecyclerview() {
         val listener = object : AdapterItemTouchListener {
             override fun checkFavorite(product: ProductItem.Product) {
-                    activityViewModel.addFavorite(product)
+                activityViewModel.addFavorite(product)
             }
 
             override fun cancelFavorite(product: ProductItem.Product) {
-
-                    activityViewModel.cancelFavorite(product)
-                    activityViewModel.loadFavoriteData()
-
+                activityViewModel.cancelFavorite(product)
+                activityViewModel.loadFavoriteData()
             }
         }
         adapter = LodgingListAdapter(listener, activityViewModel.favoriteIdSet)

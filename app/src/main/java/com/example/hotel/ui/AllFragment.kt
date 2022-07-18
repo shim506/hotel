@@ -43,7 +43,6 @@ class AllFragment : Fragment() {
 
         listenLodgingRecyclerViewScrollEnd()
 
-
         return binding.root
     }
 
@@ -83,9 +82,7 @@ class AllFragment : Fragment() {
         val listener = object : AdapterItemTouchListener {
             override fun checkFavorite(product: ProductItem.Product) {
                 activityViewModel.addFavorite(product)
-
             }
-
             override fun cancelFavorite(product: ProductItem.Product) {
                 activityViewModel.cancelFavorite(product)
             }

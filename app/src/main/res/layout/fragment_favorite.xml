@@ -13,41 +13,50 @@
         tools:context=".ui.FavoriteFragment">
 
 
-        <LinearLayout
-            android:id="@+id/ll_sort_container"
+        <RadioGroup
+            android:id="@+id/rg_sort"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintTop_toTopOf="parent">
 
-            <Button
+            <RadioButton
+                android:id="@+id/rb_old_sort"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="최근등록순" />
+                android:buttonTint="@color/hotel_red_2"
+                android:checked="true"
+                android:text="@string/old_register_button" />
 
-            <Button
+            <RadioButton
+                android:id="@+id/rb_recent_sort"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="오래된등록순" />
+                android:buttonTint="@color/hotel_red_2"
+                android:text="@string/recent_register_button" />
 
-            <Button
+            <RadioButton
+                android:id="@+id/rb_good_rate_sort"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="평점순높은순" />
+                android:buttonTint="@color/hotel_red_2"
+                android:text="@string/good_rate_button" />
 
-            <Button
+            <RadioButton
+                android:id="@+id/rb_bad_rate_sort"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="평점낮은순" />
-        </LinearLayout>
+                android:buttonTint="@color/hotel_red_2"
+                android:text="@string/bad_rate_button" />
+        </RadioGroup>
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_favorite_lodging"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@id/ll_sort_container"
-           app:layout_constraintBottom_toBottomOf="parent"
-            />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rg_sort" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

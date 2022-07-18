@@ -3,6 +3,7 @@ package com.example.hotel.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.hotel.data.ProductItem
+import com.example.hotel.data.SortType
 import com.example.hotel.data.repository.MainRepository
 import com.example.hotel.data.repository.local.FavoriteDataSource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,7 +18,6 @@ import javax.inject.Inject
 class FavoriteViewModel @Inject constructor(
     private val favoriteDataSource: FavoriteDataSource
 ) : ViewModel() {
-
 
 
 

@@ -1,8 +1,10 @@
 package com.example.hotel.ui
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.hotel.data.ProductItem
+import com.example.hotel.data.SortType
 import com.example.hotel.data.repository.MainRepository
 import com.example.hotel.data.repository.local.FavoriteDataSource
 import com.example.hotel.network.NetworkResult.Companion.LAST_PAGE
@@ -35,10 +37,15 @@ class MainViewModel @Inject constructor(
     private val _exceptionMessage = MutableSharedFlow<String>()
     val exceptionMessage: SharedFlow<String> = _exceptionMessage
 
+    private val _nowSortType = MutableStateFlow<SortType>(SortType.RECENT)
+    val nowSortType: StateFlow<SortType> = _nowSortType
+
+
     val favoriteIdSet = mutableSetOf<Int>()
 
     init {
         loadLodgingData()
+        loadFavoriteData()
         setFavoriteIdSet()
     }
 
@@ -93,7 +100,7 @@ class MainViewModel @Inject constructor(
         pagingCount++
     }
 
-     fun addFavorite(product: ProductItem.Product) {
+    fun addFavorite(product: ProductItem.Product) {
         viewModelScope.launch(Dispatchers.IO) {
             favoriteDataSource.insertProduct(product)
             favoriteIdSet.add(product.id)
@@ -102,12 +109,32 @@ class MainViewModel @Inject constructor(
 
     }
 
-     fun cancelFavorite(product: ProductItem.Product) {
+    fun cancelFavorite(product: ProductItem.Product) {
         viewModelScope.launch(Dispatchers.IO) {
             favoriteDataSource.deleteProduct(product)
             favoriteIdSet.remove(product.id)
             loadFavoriteData()
         }
 
+    }
+
+    fun changeSortType(goodRate: SortType) {
+        viewModelScope.launch(Dispatchers.IO) {
+            when (goodRate) {
+                SortType.RECENT -> {
+                    val list = favoriteDataSource.getProducts()
+                    _favoriteList.value = list.reversed()
+                }
+                SortType.OLD -> {
+                    loadFavoriteData()
+                }
+                SortType.GOOD_RATE -> {
+                    _favoriteList.value = _favoriteList.value.sortedByDescending { it.rate }
+                }
+                else -> {
+                    _favoriteList.value = _favoriteList.value.sortedBy { it.rate }
+                }
+            }
+        }
     }
 }
