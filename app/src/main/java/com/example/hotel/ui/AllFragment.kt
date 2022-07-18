@@ -82,13 +82,12 @@ class AllFragment : Fragment() {
     private fun setRecyclerview() {
         val listener = object : AdapterItemTouchListener {
             override fun checkFavorite(product: ProductItem.Product) {
-                lifecycleScope.launch(Dispatchers.IO) {
-                    activityViewModel.addFavorite(product)
-                }
+                activityViewModel.addFavorite(product)
+
             }
 
             override fun cancelFavorite(product: ProductItem.Product) {
-                lifecycleScope.launch(Dispatchers.IO) { activityViewModel.cancelFavorite(product) }
+                activityViewModel.cancelFavorite(product)
             }
         }
         adapter = LodgingListAdapter(listener, activityViewModel.favoriteIdSet)

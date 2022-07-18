@@ -11,12 +11,14 @@ sealed class ProductItem() {
     data class Product(
         @Embedded
         val description: Description,
-        @PrimaryKey
         val id: Int,
         val name: String,
         val rate: Double,
         val thumbnail: String
-    ) : ProductItem()
+    ) : ProductItem() {
+        @PrimaryKey(autoGenerate = true)
+        var registerIdx: Int = 0
+    }
 
     class LoadingBar() : ProductItem()
 }

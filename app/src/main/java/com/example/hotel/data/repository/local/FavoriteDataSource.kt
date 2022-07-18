@@ -17,7 +17,7 @@ class FavoriteDataSource @Inject constructor(
     }
 
     fun deleteProduct(product: ProductItem.Product) {
-        return dao.delete(product)
+        return dao.deleteById(product.id)
     }
 
     fun insertProduct(product: ProductItem.Product) {

@@ -18,12 +18,7 @@ class FavoriteViewModel @Inject constructor(
     private val favoriteDataSource: FavoriteDataSource
 ) : ViewModel() {
 
-    private val _favoriteList = MutableStateFlow<List<ProductItem.Product>>(listOf())
-    val favoriteList: StateFlow<List<ProductItem>> = _favoriteList
 
-    fun loadFavoriteData() {
-        viewModelScope.launch(Dispatchers.IO) {
-            _favoriteList.value = favoriteDataSource.getProducts()
-        }
-    }
+
+
 }

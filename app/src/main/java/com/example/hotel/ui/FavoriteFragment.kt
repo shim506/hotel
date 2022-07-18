@@ -16,7 +16,6 @@ import com.example.hotel.R
 import com.example.hotel.data.ProductItem
 import com.example.hotel.databinding.FragmentFavoriteBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
@@ -36,16 +35,16 @@ class FavoriteFragment : Fragment() {
 
         setRecyclerview()
 
-        viewModel.loadFavoriteData()
-        listenLodgingDataChange()
+        activityViewModel.loadFavoriteData()
+        listenFavoriteDataChange()
 
         return binding.root
     }
 
-    private fun listenLodgingDataChange() {
+    private fun listenFavoriteDataChange() {
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.favoriteList.collect {
+                activityViewModel.favoriteList.collect {
                     adapter.submitList(it)
                 }
             }
@@ -55,16 +54,14 @@ class FavoriteFragment : Fragment() {
     private fun setRecyclerview() {
         val listener = object : AdapterItemTouchListener {
             override fun checkFavorite(product: ProductItem.Product) {
-                lifecycleScope.launch(Dispatchers.IO) {
                     activityViewModel.addFavorite(product)
-                }
             }
 
             override fun cancelFavorite(product: ProductItem.Product) {
-                lifecycleScope.launch(Dispatchers.IO)  {
+
                     activityViewModel.cancelFavorite(product)
-                    viewModel.loadFavoriteData()
-                }
+                    activityViewModel.loadFavoriteData()
+
             }
         }
         adapter = LodgingListAdapter(listener, activityViewModel.favoriteIdSet)

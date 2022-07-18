@@ -23,6 +23,9 @@ class MainViewModel @Inject constructor(
 ) : ViewModel() {
     private var pagingCount = 1
 
+    private val _favoriteList = MutableStateFlow<List<ProductItem.Product>>(listOf())
+    val favoriteList: StateFlow<List<ProductItem>> = _favoriteList
+
     private val _accumulateProductList = MutableStateFlow<List<ProductItem>>(listOf())
     val accumulateProductList: StateFlow<List<ProductItem>> = _accumulateProductList
 
@@ -37,6 +40,12 @@ class MainViewModel @Inject constructor(
     init {
         loadLodgingData()
         setFavoriteIdSet()
+    }
+
+    fun loadFavoriteData() {
+        viewModelScope.launch(Dispatchers.IO) {
+            _favoriteList.value = favoriteDataSource.getProducts()
+        }
     }
 
     private fun setFavoriteIdSet() {
@@ -84,13 +93,21 @@ class MainViewModel @Inject constructor(
         pagingCount++
     }
 
-    suspend fun addFavorite(product: ProductItem.Product) {
-        favoriteDataSource.insertProduct(product)
-        favoriteIdSet.add(product.id)
+     fun addFavorite(product: ProductItem.Product) {
+        viewModelScope.launch(Dispatchers.IO) {
+            favoriteDataSource.insertProduct(product)
+            favoriteIdSet.add(product.id)
+            loadFavoriteData()
+        }
+
     }
 
-    suspend fun cancelFavorite(product: ProductItem.Product) {
-        favoriteDataSource.deleteProduct(product)
-        favoriteIdSet.remove(product.id)
+     fun cancelFavorite(product: ProductItem.Product) {
+        viewModelScope.launch(Dispatchers.IO) {
+            favoriteDataSource.deleteProduct(product)
+            favoriteIdSet.remove(product.id)
+            loadFavoriteData()
+        }
+
     }
 }
