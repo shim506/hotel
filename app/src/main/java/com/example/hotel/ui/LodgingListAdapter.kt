@@ -29,6 +29,9 @@ class LodgingListAdapter(
                 if (binding.cbFavorite.isChecked) listener.checkFavorite(item)
                 else listener.cancelFavorite(item)
             }
+            binding.root.setOnClickListener {
+                listener.getIntoDetail(item)
+            }
         }
     }
 

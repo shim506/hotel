@@ -9,10 +9,30 @@
         android:id="@+id/allFragment"
         android:name="com.example.hotel.ui.AllFragment"
         android:label="fragment_all"
-        tools:layout="@layout/fragment_all" />
+        tools:layout="@layout/fragment_all" >
+        <action
+            android:id="@+id/action_allFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/favoriteFragment"
         android:name="com.example.hotel.ui.FavoriteFragment"
         android:label="fragment_favorite"
-        tools:layout="@layout/fragment_favorite" />
+        tools:layout="@layout/fragment_favorite" >
+        <action
+            android:id="@+id/action_favoriteFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+        <action
+            android:id="@+id/action_favoriteFragment_to_detailFragment2"
+            app:destination="@id/detailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.example.hotel.DetailFragment"
+        android:label="fragment_detail"
+        tools:layout="@layout/fragment_detail" >
+        <argument
+            android:name="product"
+            app:argType="com.example.hotel.data.ProductItem$Product" />
+    </fragment>
 </navigation>

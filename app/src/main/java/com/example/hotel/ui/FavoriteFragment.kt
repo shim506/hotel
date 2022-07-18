@@ -13,6 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.hotel.R
 import com.example.hotel.data.ProductItem
@@ -37,7 +38,6 @@ class FavoriteFragment : Fragment() {
             DataBindingUtil.inflate(inflater, R.layout.fragment_favorite, container, false)
 
         setRecyclerview()
-
 
         listenFavoriteDataChange()
         listenSortTypeButtonClicked()
@@ -88,6 +88,12 @@ class FavoriteFragment : Fragment() {
             override fun cancelFavorite(product: ProductItem.Product) {
                 activityViewModel.cancelFavorite(product)
                 activityViewModel.loadFavoriteData()
+            }
+
+            override fun getIntoDetail(product: ProductItem.Product) {
+                val action =
+                    FavoriteFragmentDirections.actionFavoriteFragmentToDetailFragment(product)
+                findNavController().navigate(action)
             }
         }
         adapter = LodgingListAdapter(listener, activityViewModel.favoriteIdSet)
