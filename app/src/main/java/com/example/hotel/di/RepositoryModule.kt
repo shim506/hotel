@@ -4,8 +4,8 @@ package com.example.hotel.di
 import android.content.Context
 import androidx.room.Room
 import com.example.hotel.data.repository.MainDataSource
-import com.example.hotel.data.repository.MainRepository
 import com.example.hotel.data.repository.MainRemoteDataSource
+import com.example.hotel.data.repository.MainRepository
 import com.example.hotel.data.repository.local.FavoriteDataSource
 import com.example.hotel.data.repository.local.FavoriteDatabase
 import com.example.hotel.network.ApiService

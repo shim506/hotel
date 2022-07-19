@@ -1,6 +1,5 @@
 package com.example.hotel.ui
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.hotel.data.ProductItem
@@ -13,7 +12,10 @@ import com.example.hotel.network.onException
 import com.example.hotel.network.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -39,7 +41,6 @@ class MainViewModel @Inject constructor(
 
     private val _nowSortType = MutableStateFlow<SortType>(SortType.RECENT)
     val nowSortType: StateFlow<SortType> = _nowSortType
-
 
     val favoriteIdSet = mutableSetOf<Int>()
 
