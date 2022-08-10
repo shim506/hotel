@@ -39,6 +39,8 @@ android {
 }
 
 dependencies {
+    implementation project(":time")
+    implementation project(":login")
     // room
     implementation 'androidx.room:room-runtime:2.4.2'
     kapt 'androidx.room:room-compiler:2.4.2'
